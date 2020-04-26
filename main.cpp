@@ -341,9 +341,9 @@ void solver::Initialize(const piece_definition (&Pieces)[NUM_PIECES])
     // move the set bits up and to the left as far as possible
     for (s32 PieceIdx = 0; PieceIdx < NUM_PIECES; PieceIdx++)
     {
-        for (s32 isoIdx = 0; isoIdx < 2 * NUM_ROTATIONS; isoIdx++)
+        for (s32 OrientationIdx = 0; OrientationIdx < 2 * NUM_ROTATIONS; OrientationIdx++)
         {
-            PushUpAndLeft(PieceOrientations[PieceIdx][isoIdx].Definition);
+            PushUpAndLeft(PieceOrientations[PieceIdx][OrientationIdx].Definition);
         }
     }
 
