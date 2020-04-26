@@ -1,2 +1,2 @@
 # quadrillion
-Solver for Quadrillion puzzle game
+Solver for Quadrillion puzzle game by SmartGames
