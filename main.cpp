@@ -522,13 +522,13 @@ void solver::Solve(
         assert(EmptyCellIdx < InputBoardNumEmptyCells);
 
         // determine which pieces are available
-        s32 RemaningPieceIdxs[NUM_PIECES];
+        s32 RemainingPieceIdxs[NUM_PIECES];
         s32 NumRemainingPieces = 0;
         for (s32 PieceIdx = 0; PieceIdx < NUM_PIECES; PieceIdx++)
         {
             if ((SearchState.RemainingPieceBitFlags >> PieceIdx) & 1u)
             {
-                RemaningPieceIdxs[NumRemainingPieces++] = PieceIdx;
+                RemainingPieceIdxs[NumRemainingPieces++] = PieceIdx;
             }
         }
 
@@ -537,7 +537,7 @@ void solver::Solve(
         // try to fill the empty cell with every available piece...
         for (s32 RemainingIdx = 0; RemainingIdx < NumRemainingPieces; RemainingIdx++)
         {
-            const s32 PieceIdx = RemaningPieceIdxs[RemainingIdx];
+            const s32 PieceIdx = RemainingPieceIdxs[RemainingIdx];
             const search_piece& Piece = SearchPieces[PieceIdx];
 
             // ... in every orientation ...
