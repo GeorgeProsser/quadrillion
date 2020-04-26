@@ -23,7 +23,7 @@
 */
 
 /*
-    Solver for Quadrillion puzzle by Smart Games.
+    Solver for Quadrillion puzzle by SmartGames.
     https://www.smartgamesandpuzzles.com/quadrillion.html
 */
 
