@@ -79,6 +79,7 @@ struct search_piece
 
 A similar approach is used for the empty cells of the board (pre-computed and put into a single array before searching begins), and also the remaining pieces (pre-computed and put into a single array for each board state that is tested).
 
+
 One source of branching that I attempted to reduce was lines 564-566 (code below). I got rid of the need for a valid index test by "padding" the board with additional rows/columns containing only invalid cells. I also removed the `break` was and replaced the conditional with `CanPlace &=`. Although these changes presumably reduced branching, they actually resulted in a slowdown. I didn't investigate much further. Perhaps any savings were offset by the additional cost of the `SearchState.Board.Cells` lookup, or maybe the branch here wasn't as bad as I'd first thought (we have to branch on `CanPlace` immediately after this loop, so maybe the compiler had optimized the branching somehow)?
 ````C++
 const bool IsValidCellIdx = (BallRowIdx >= 0) && (BallRowIdx < NumRows) && (BallColIdx >= 0) && (BallColIdx < NumCols);
@@ -89,9 +90,11 @@ if (!(IsValidCellIdx && SearchState.Board.Cells[BallRowIdx][BallColIdx] == cell_
     break;
 ````
 
+
 I had a few other ideas for speeding the solver up that I didn't explore.
 
-First: caching. If the set of empty cells and set of remaining pieces for any two boards is the same, these remaining pieces can be placed exactly the same way for both boards. By comparing a board state to a state whose solutions have already been found, we can use this observation to rapidly eliminate a state with no solutions, or to quickly identify all its possible solutions.
+First: **caching**. If the set of empty cells and set of remaining pieces for any two boards is the same, these remaining pieces can be placed exactly the same way for both boards. By comparing a board state to a state whose solutions have already been found, we can use this observation to rapidly eliminate a state with no solutions, or to quickly identify all its possible solutions.
 
 Not only can we compare states with the same input board, we can also compare states with different input boards, since this approach doesn't distinguish between cells which are occupied by a piece and those which are blocked/invalid. This would suggest that we may wish to use a single cache across all the boards we want to solve. Comparing board states may potentially be done quite efficiently using some kind of packed representation.
 
+Second: **parallelization**. I think the problem lends itself quite well to parallelization, as we tend to do a lot more testing of pieces than we do adding/removing search states. That means we could potentially distribute the work across multiple threads without much contention on the array of search states.
