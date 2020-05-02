@@ -38,8 +38,6 @@ orientations tested: 978024068
 balls tested: 1290565848
 ```
 
-----
-
 ## Search strategy
 
 The solver does a depth-first search (I ran out of memory with a breadth-first search), attempting to place each of the different puzzle pieces onto the board in different positions and orientations.
@@ -50,4 +48,7 @@ The second implementation (and the one in this repo) instead tries to fill the e
 
 Searching by trying to fill cells is vastly more efficient than searching by trying to place pieces, as there are many many board configurations that have _almost_ all the pieces placed but still have un-fillable cells. A solver that searches by placing pieces will waste a lot of computation time on these "dead-end" configurations, while a solver filling cells will (in most cases) detect that it cannot make progress much sooner.
 
-The solver in this repo just tried to fill cells 
+The solver in this repo just tries to fill cells left-to-right, top-to-bottom. A potential improvement (that I didn't try) would be to prioritize cells which are "harder" to fill - ie. cells with fewer unoccupied neighbor cells - as this may help us find an un-fillable cell sooner. However the order left-to-right, top-to-bottom, appears to work well enough. Perhaps because this implicitly enforces an upper bound on how many neighboring cells can unoccupied: there cannot be more than 2 as the direct neighbors above and to the left will have already been filled.
+
+## Optimization
+
