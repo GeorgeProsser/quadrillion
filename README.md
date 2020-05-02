@@ -89,4 +89,9 @@ if (!(IsValidCellIdx && SearchState.Board.Cells[BallRowIdx][BallColIdx] == cell_
     break;
 ````
 
+I had a few other ideas for speeding the solver up that I didn't explore.
+
+First: caching. If the set of empty cells and set of remaining pieces for any two boards is the same, these remaining pieces can be placed exactly the same way for both boards. By comparing a board state to a state whose solutions have already been found, we can use this observation to rapidly eliminate a state with no solutions, or to quickly identify all its possible solutions.
+
+Not only can we compare states with the same input board, we can also compare states with different input boards, since this approach doesn't distinguish between cells which are occupied by a piece and those which are blocked/invalid. This would suggest that we may wish to use a single cache across all the boards we want to solve. Comparing board states may potentially be done quite efficiently using some kind of packed representation.
 
