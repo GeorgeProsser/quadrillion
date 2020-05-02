@@ -29,7 +29,6 @@
 
 #define FAST 1
 #define WITH_STATS !FAST
-#define WITH_ERROR_HANDLING !FAST
 
 #if FAST
 #define NDEBUG
