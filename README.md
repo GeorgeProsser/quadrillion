@@ -52,3 +52,10 @@ The solver in this repo just tries to fill cells left-to-right, top-to-bottom. A
 
 ## Optimization
 
+Almost all the optimization comes down to: using pre-computation to reduce repeated work and remove branches from inner loops.
+
+First, we pre-compute all the orientations of the puzzle pieces. Each piece has 4 rotations, and can also be flipped over, resulting in 8 orientations. Not all of these orientations are unique however, and the pre-computation step also strips out these duplicates.
+
+Rather than representing the puzzle piece orientations using a 2d array (as they are inputted to the program) we store an array of the row and column indices of the "balls" that make up the piece (a kind of packed version of the 2d array). When testing whether a piece orientation can be placed on the board, this allows us to test all of the balls of the piece by just iterating through this array, avoiding the branching that would be necessary with a 2d array (where we would condition each test on whether the 2d array entry represented a ball).
+
+A similar approach is used for the empty cells of the board (pre-computed and put into a single array before searching begins), and also the remaining pieces (pre-computed and put into a single array for each board state that is tested).
