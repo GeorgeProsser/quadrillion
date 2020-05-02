@@ -82,7 +82,7 @@ bool IsPiece(const cell_value CellValue)
 
 s32 CellValueToPieceIndex(const cell_value CellValue)
 {
-    return (s32) (CellValue & 0b00001111);
+    return (s32) (CellValue - cell_value::Piece01);
 }
 
 cell_value PieceIndexToCellValue(const s32 PieceIdx)
